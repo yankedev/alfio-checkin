@@ -1,0 +1,12 @@
+{
+  "name": "alfio-checkin",
+  "app_id": "4e0b20dd",
+  "v2": true,
+  "typescript": true,
+  "proxies": [
+    {
+      "path": "/admin/api",
+      "proxyUrl": "https://test.alf.io/admin/api"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    Manage Users
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <button ion-item *ngFor="let user of users" (click)="selectCurrentUser(user)">
+      {{user.username}} <span *ngIf="getCurrentUser() && getCurrentUser().id == user.id">***</span>
+    </button>
+    <button ion-item (click)="login()">
+      <ion-icon name="person-add"></ion-icon>
+      New login
+    </button>
+
+  </ion-list>
+  <div *ngIf="selectedItem" padding>
+    You navigated here from <b>{{selectedItem.title}}</b>
+  </div>
+</ion-content>

@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-navbar no-border-bottom>
+    <ion-title>
+      Create a new user for Alf.io Backoffice
+    </ion-title>
+  </ion-navbar>
+
+  <ion-toolbar [color]="isAndroid ? 'primary' : 'light'" no-border-top>
+    <ion-segment [(ngModel)]="newUserMethod" [color]="isAndroid ? 'light' : 'primary'">
+      <ion-segment-button value="scan">
+        Scan QR Code
+      </ion-segment-button>
+      <ion-segment-button value="manually">
+        Insert manually
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <div [ngSwitch]="newUserMethod">
+
+    <div *ngSwitchCase="'scan'">
+      <ion-item>
+        <ion-label floating>barcode</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+
+      <p>Scan QR code in the box below (allow the app to access your phone camera), and user will be automagically configured for your event</p>
+      <p>
+        You can find the QR code in the alf.io admin tool, just ask for that your event organizer
+      </p>
+      <button (click)="scan()">scan</button>
+    </div>
+
+    <div *ngSwitchCase="'manually'">
+      <ion-item>
+        <ion-label floating>Alf.io base URL</ion-label>
+        <ion-input [(ngModel)]="baseUrl" type="url"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Username</ion-label>
+        <ion-input [(ngModel)]="username" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input [(ngModel)]="password" type="password"></ion-input>
+      </ion-item>
+      <div padding>
+        <button (click)="login()" primary class="login-button">Login</button>
+      </div>
+
+      <ion-input [(ngModel)]="result" type="text"></ion-input>
+    </div>
+  </div>
+
+</ion-content>
+
