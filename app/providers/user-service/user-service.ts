@@ -19,13 +19,14 @@ export class UserService {
     //we should load registeredIdentites from a secure location on the device
   }
 
-  registerNewUser(baseUrl:string, username:string, password:string) : any{
+  registerNewUser(baseUrl:string, username:string, password:string, roles?: string[]): User{
     //how do we want to handle username duplication? (2 different servers may have the same user defined)
     let newUser: User = {
       id: Date.now(),
       baseurl: baseUrl,
       username: username,
-      password: password
+      password: password,
+      roles: roles
     };
     this.registeredIdentities.push(newUser);
     return newUser;
@@ -48,6 +49,17 @@ export class UserService {
   }
 
 
+  getUser(baseurl: string, username: string): User {
+    let found = this.registeredIdentities.filter(
+      (user)=>
+        (user.baseurl === baseurl
+          && user.username === username)
+      );
+    if (found)
+      return found[0];
+    else
+      return undefined;
+  }
 }
 
 
@@ -56,4 +68,5 @@ export class User {
   baseurl:string;
   username:string;
   password:string;
+  roles:string[];
 }

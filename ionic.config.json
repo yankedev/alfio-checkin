@@ -7,6 +7,10 @@
     {
       "path": "/admin/api",
       "proxyUrl": "https://test.alf.io/admin/api"
+    },
+    {
+      "path": "/file",
+      "proxyUrl": "https://test.alf.io/file"
     }
   ]
 }

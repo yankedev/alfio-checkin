@@ -6,6 +6,7 @@ import { Page1 } from './pages/page1/page1';
 import {UserService} from './providers/user-service/user-service';
 import {UsersPage} from "./pages/users/users";
 import {EventsPage} from "./pages/events/events";
+import {RemoteService} from "./providers/remote-service/remote-service";
 
 @Component({
   templateUrl: 'build/app.html'
@@ -24,7 +25,6 @@ class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Page1', component: Page1},
       { title: 'Events', component: EventsPage },
       { title: 'Manage Users', component: UsersPage }
     ];
@@ -50,4 +50,4 @@ class MyApp {
   }
 }
 
-ionicBootstrap(MyApp, [UserService]);
+ionicBootstrap(MyApp, [UserService, RemoteService]);

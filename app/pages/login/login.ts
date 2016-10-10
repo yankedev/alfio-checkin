@@ -21,8 +21,8 @@ export class LoginPage implements OnInit {
 
   ngOnInit(){
     this.newUserMethod="manually";
-    //this.baseUrl = "https://test.alf.io";
-    this.baseUrl = "http://localhost:8101";
+    this.baseUrl = "https://test.alf.io";
+    //this.baseUrl = "http://localhost:8100";
     this.username = "yanke";
     this.password = "o5-XpGP2AI(^2(";
   }
@@ -32,8 +32,9 @@ export class LoginPage implements OnInit {
   {
     BarcodeScanner.scan().then((result) => {
       // Success!
-      alert("We got a barcode\n" +
+      alert("We got a barcode:\n" +
         "Result: " + result.text + "\n" +
+        "JSON: " + result.json() + "\n" +
         "Format: " + result.format + "\n" +
         "Cancelled: " + result.cancelled);
     }, (err) => {
@@ -60,7 +61,7 @@ export class LoginPage implements OnInit {
         let newUser = this.userService.registerNewUser(this.baseUrl, this.username, this.password);
         this.userService.setCurrentUser(newUser.id);
 
-        this.presentToast(newUser.id);
+        this.presentToast(newUser.username);
 
         //reset the values
         this.ngOnInit();

@@ -31,7 +31,7 @@
       <p>
         You can find the QR code in the alf.io admin tool, just ask for that your event organizer
       </p>
-      <button (click)="scan()">scan</button>
+      <span (onload)="scan()">scan</span>
     </div>
 
     <div *ngSwitchCase="'manually'">
