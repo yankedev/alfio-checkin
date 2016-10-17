@@ -3,7 +3,7 @@ import { Http, Headers } from '@angular/http';
 import { NavController, ToastController } from 'ionic-angular';
 import { BarcodeScanner } from 'ionic-native';
 
-import {UserService} from '../../providers/user-service/user-service';
+import {UserService} from '../../providers/user-service/user-service-secure-storage';
 
 @Component({
   templateUrl: 'build/pages/login/login.html'
@@ -14,7 +14,8 @@ export class LoginPage implements OnInit {
   username:string;
   password:string;
   result: string;
-  public newUserMethod: String;
+  newUserMethod: String;
+  isLoading: boolean;
 
   constructor(public navCtrl: NavController, private http: Http, private userService: UserService, public toastCtrl: ToastController) {
   }
@@ -24,22 +25,36 @@ export class LoginPage implements OnInit {
     this.baseUrl = "https://test.alf.io";
     //this.baseUrl = "http://localhost:8100";
     this.username = "yanke";
-    this.password = "o5-XpGP2AI(^2(";
+    this.password = ")&mWRf%slRmTs";
   }
 
 
   scan()
   {
-    BarcodeScanner.scan().then((result) => {
-      // Success!
-      alert("We got a barcode:\n" +
-        "Result: " + result.text + "\n" +
-        "JSON: " + result.json() + "\n" +
-        "Format: " + result.format + "\n" +
-        "Cancelled: " + result.cancelled);
-    }, (err) => {
-      // An error occurred
+    BarcodeScanner.scan({
+      formats: "QR_CODE",   // Pass in of you want to restrict scanning to certain types
+      cancelLabel: "Stop scanning", // iOS only, default 'Close'
+      message: "Scan your configuration QR-Code", // Android only, default is 'Place a barcode inside the viewfinder rectangle to scan it.'
+      preferFrontCamera: false,     // Android only, default false
+      showFlipCameraButton: true,   // Android only, default false (on iOS it's always available)
+      orientation: "portrait"      // Android only, optionally lock the orientation to either "portrait" or "landscape"
+    }).then((result) => {
+      this.isLoading = true;
+      let scanResult = JSON.parse(result.text);
+      let newUser = this.userService.registerNewUser(scanResult.baseUrl, scanResult.username, scanResult.password)
+      this.userService.setCurrentUser(newUser.id);
+      this.isLoading = false;
+      this.presentToast(newUser.username);
+
+      //reset the values
+      this.ngOnInit();
+      //close the login window
+      this.navCtrl.pop();
+    }, (error) => {
+      console.log("No scan: " + error);
+      this.isLoading = false;
     });
+
   }
 
   presentToast(username) {

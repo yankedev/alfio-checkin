@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { LoginPage } from '../login/login';
-import { UserService } from '../../providers/user-service/user-service';
+import { UserService } from '../../providers/user-service/user-service-secure-storage';
 
 @Component({
   templateUrl: 'build/pages/users/users.html',

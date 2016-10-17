@@ -27,11 +27,11 @@
         <ion-input type="text"></ion-input>
       </ion-item>
 
-      <p>Scan QR code in the box below (allow the app to access your phone camera), and user will be automagically configured for your event</p>
+      <p>Test new text Scan QR code in the box below (allow the app to access your phone camera), and user will be automagically configured for your event</p>
       <p>
         You can find the QR code in the alf.io admin tool, just ask for that your event organizer
       </p>
-      <span (onload)="scan()">scan</span>
+      <button large secondary item-right (click)="scan(event)">Scan</button>
     </div>
 
     <div *ngSwitchCase="'manually'">

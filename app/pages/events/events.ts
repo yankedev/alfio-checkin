@@ -3,7 +3,7 @@ import { NavController } from 'ionic-angular';
 import { Http, Headers } from '@angular/http';
 import { BarcodeScanner } from 'ionic-native';
 
-import {UserService, User} from '../../providers/user-service/user-service';
+import {UserService, User} from '../../providers/user-service/user-service-secure-storage';
 import {RemoteService} from "../../providers/remote-service/remote-service";
 
 @Component({

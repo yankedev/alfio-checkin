@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
-import {UserService, User} from '../../providers/user-service/user-service';
+import {UserService, User} from '../../providers/user-service/user-service-secure-storage';
 
 @Component({
   templateUrl: 'build/pages/page1/page1.html'

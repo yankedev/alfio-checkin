@@ -3,7 +3,7 @@ import { ionicBootstrap, Platform, Nav } from 'ionic-angular';
 import { StatusBar } from 'ionic-native';
 
 import { Page1 } from './pages/page1/page1';
-import {UserService} from './providers/user-service/user-service';
+import {UserService} from './providers/user-service/user-service-secure-storage';
 import {UsersPage} from "./pages/users/users";
 import {EventsPage} from "./pages/events/events";
 import {RemoteService} from "./providers/remote-service/remote-service";

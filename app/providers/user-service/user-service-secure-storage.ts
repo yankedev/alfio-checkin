@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
+import {Platform} from 'ionic-angular';
 import { Http } from '@angular/http';
-import { Events, LocalStorage, Storage } from 'ionic-angular';
 import 'rxjs/add/operator/map';
+import { SecureStorage } from 'ionic-native';
 
 /*
   Generated class for the UserService provider.
@@ -9,14 +10,40 @@ import 'rxjs/add/operator/map';
   See https://angular.io/docs/ts/latest/guide/dependency-injection.html
   for more info on providers and Angular 2 DI.
 */
+const ALFIO_USERS_KEY = "ALFIO_USERS";
+const ALFIO_APP_KEY = "ALFIO_APP";
+
 @Injectable()
 export class UserService {
 
   private registeredIdentities:User[] = [];
   private currentIdentityId: string;
+  secureStorage: SecureStorage = new SecureStorage();
 
-  constructor(private http: Http) {
-    //we should load registeredIdentites from a secure location on the device
+  constructor(private http: Http, platform: Platform) {
+    console.warn('Creating UserService!');
+
+    platform.ready().then(() => {
+      
+      this.secureStorage.create(ALFIO_APP_KEY).then(
+        () => {
+          console.log('Storage is ready!');
+
+          this.secureStorage.get(ALFIO_USERS_KEY)
+          .then(
+            data => {
+              console.log('data was '+data);
+              this.registeredIdentities = JSON.parse(data);
+            },
+            error => {
+              // do nothing - it just means it doesn't exist
+            }
+          );
+        },
+        error => console.log(error)
+      );
+
+    });
   }
 
   registerNewUser(baseUrl:string, username:string, password:string, roles?: string[]): User{
@@ -29,6 +56,12 @@ export class UserService {
       roles: roles
     };
     this.registeredIdentities.push(newUser);
+    console.log(this.registeredIdentities);
+    this.secureStorage.set(ALFIO_USERS_KEY, JSON.stringify(this.registeredIdentities))
+      .then(
+        data => console.log("New user registered"),
+        error => console.warn(error)
+      );
     return newUser;
   }
 
